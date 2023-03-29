@@ -1,0 +1,58 @@
+<?php
+/*
+	Template Name: sample calender
+*/
+
+	$eventsArray = array(
+	    array(
+	        "title" => "Event 1",
+	        "start" => "2023-03-05"
+	    ),
+	    array(
+	        "title" => "Event 2",
+	        "start" => "2023-03-10"
+	    )
+	);
+
+	echo '<pre>';
+	print_r($eventsArray);
+	echo '</pre>';
+
+	$eventsJSON = json_encode($eventsArray);
+	echo '<pre>';
+	print_r($eventsJSON);
+	echo '</pre>';
+
+?>
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <meta charset='utf-8' />
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.5/index.global.min.js'></script>
+    <script>
+
+      document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+          initialView: 'dayGridMonth',
+	        headerToolbar: {
+	            left: 'prev',
+	            center: 'title',
+	            right: 'next'
+	        },
+        	titleFormat: { month: 'long' },
+			buttonText: {
+			    prev: "PREVIOUS",
+			    next: "NEXT"
+			},
+          events: <?php echo $eventsJSON; ?>
+        });
+        calendar.render();
+      });
+
+    </script>
+  </head>
+  <body>
+    <div id='calendar'></div>
+  </body>
+</html>
